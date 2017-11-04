@@ -59,6 +59,8 @@ public class KuadratTerkecil extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -161,6 +163,11 @@ public class KuadratTerkecil extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel11.setText("Rumus & Hasil Perhitungan");
 
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 30)); // NOI18N
+        jLabel1.setText("Program Statistika - Kuadrat Terkecil");
+
+        jLabel12.setText("By : EdgarJeremy");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -182,7 +189,7 @@ public class KuadratTerkecil extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txCariWaktu, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -205,21 +212,32 @@ public class KuadratTerkecil extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(35, 35, 35)))
-                        .addGap(102, 102, 102))))
+                        .addGap(103, 103, 103))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel12)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel12)))
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,10 +254,10 @@ public class KuadratTerkecil extends javax.swing.JFrame {
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(res3)
-                        .addGap(23, 23, 23))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(mainContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txCariWaktu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9))
@@ -247,7 +265,7 @@ public class KuadratTerkecil extends javax.swing.JFrame {
                         .addComponent(btnTambahBaris)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnHasil)
-                        .addGap(27, 27, 27))))
+                        .addContainerGap(28, Short.MAX_VALUE))))
         );
 
         pack();
@@ -290,22 +308,38 @@ public class KuadratTerkecil extends javax.swing.JFrame {
         rowCount++;
     }
     
+    private int[] genXGenap(int n) {
+        int mulai = n / 2;
+        int[] xS = new int[n];
+        int tambah = 0;
+        for(int i = 1;i<=mulai;i++){
+            xS[mulai-i] = -(i+tambah);
+            tambah++;
+        }
+        tambah = 0;
+        for(int i = 0;i<mulai;i++) {
+            xS[mulai+i] = i+1+tambah;
+            tambah++;
+        }
+        return xS;
+    }
+    
     private void proc() {
         int n = listX.size();
         DefaultTableModel dm = new DefaultTableModel(0,0);
         String header[] = new String[] {"Tahun","Y","X","XY","X^2"};
         dm.setColumnIdentifiers(header);
         tblHasil.setModel(dm);
-        int awal,akhir;
+        int[] xs;
         if(n % 2 == 0) {
-            // genap
-            // TODO : Fungsi generate range tanpa 0
-            awal = -4;
-            akhir = 4;
+            // n ganjil
+            xs = this.genXGenap(n);
         } else {
-            // ganjil
+            // n ganjil
+            int awal,akhir;
             awal = -((n - 1) / 2);
             akhir = -awal;
+            xs = IntStream.rangeClosed(awal,akhir).toArray();
         }
         
         float sY = 0;
@@ -313,16 +347,27 @@ public class KuadratTerkecil extends javax.swing.JFrame {
         float sXY = 0;
         float sX2 = 0;
         
-        int[] xs = IntStream.rangeClosed(awal,akhir).toArray();
         int cari = Integer.valueOf(txCariWaktu.getText());
         int xCari;
         int nilaiWaktuAkhir = Integer.valueOf(listX.get(listX.size() - 1).getText());
         int nilaiWaktuAwal = Integer.valueOf(listX.get(0).getText());
-        if(cari > nilaiWaktuAkhir){
-            xCari = (cari - nilaiWaktuAkhir) + xs[xs.length -1];
+        
+        if(n % 2 != 0) {
+            // n ganjil
+            if(cari > nilaiWaktuAkhir){
+                xCari = (cari - nilaiWaktuAkhir) + xs[xs.length -1];
+            } else {
+                xCari = (cari - nilaiWaktuAwal) + xs[0];
+            }
         } else {
-            xCari = (cari - nilaiWaktuAwal) + xs[0];
+            // n genap
+            if(cari > nilaiWaktuAkhir) {
+                xCari = xs[xs.length - 1] + ((cari - nilaiWaktuAkhir) * 2);
+            } else {
+                xCari = xs[0] - ((nilaiWaktuAwal - cari) * 2);
+            }
         }
+        
         
         for(int i=0;i<n;i++) {
             JTextField itemX = listX.get(i);
@@ -398,8 +443,10 @@ public class KuadratTerkecil extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHasil;
     private javax.swing.JButton btnTambahBaris;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
