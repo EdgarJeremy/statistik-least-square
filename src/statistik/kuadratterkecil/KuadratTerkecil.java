@@ -325,84 +325,107 @@ public class KuadratTerkecil extends javax.swing.JFrame {
     }
     
     private void proc() {
+        JTextField txtErr = null;
         int n = listX.size();
-        DefaultTableModel dm = new DefaultTableModel(0,0);
-        String header[] = new String[] {"Tahun","Y","X","XY","X^2"};
-        dm.setColumnIdentifiers(header);
-        tblHasil.setModel(dm);
-        int[] xs;
-        if(n % 2 == 0) {
-            // n ganjil
-            xs = this.genXGenap(n);
-        } else {
-            // n ganjil
-            int awal,akhir;
-            awal = -((n - 1) / 2);
-            akhir = -awal;
-            xs = IntStream.rangeClosed(awal,akhir).toArray();
-        }
+        boolean ketemu = false;
+        int idxKetemu;
         
-        float sY = 0;
-        float sX = 0;
-        float sXY = 0;
-        float sX2 = 0;
-        
-        int cari = Integer.valueOf(txCariWaktu.getText());
-        int xCari;
-        int nilaiWaktuAkhir = Integer.valueOf(listX.get(listX.size() - 1).getText());
-        int nilaiWaktuAwal = Integer.valueOf(listX.get(0).getText());
-        
-        if(n % 2 != 0) {
-            // n ganjil
-            if(cari > nilaiWaktuAkhir){
-                xCari = (cari - nilaiWaktuAkhir) + xs[xs.length -1];
-            } else {
-                xCari = (cari - nilaiWaktuAwal) + xs[0];
+        for(int i = 0; i<n; i++) {
+            if(listX.get(i).getText().equals("")) {
+                txtErr = listX.get(i);
+                ketemu = true;
+                break;
             }
-        } else {
-            // n genap
-            if(cari > nilaiWaktuAkhir) {
-                xCari = xs[xs.length - 1] + ((cari - nilaiWaktuAkhir) * 2);
-            } else {
-                xCari = xs[0] - ((nilaiWaktuAwal - cari) * 2);
+            if(listY.get(i).getText().equals("")) {
+                txtErr = listY.get(i);
+                ketemu = true;
+                break;
             }
         }
         
-        
-        for(int i=0;i<n;i++) {
-            JTextField itemX = listX.get(i);
-            JTextField itemY = listY.get(i);
-            int tahun = Integer.valueOf(itemX.getText());
-            int x = xs[i];
-            int y = Integer.valueOf(itemY.getText());
-            int xy = x*y;
-            int x2 = (int) Math.pow(x, 2);
-            
-            sY += y;
-            sX += x;
-            sXY += xy;
-            sX2 += x2;
-            
-            Vector<Object> data = new Vector<Object>();
-            data.add(itemX.getText());
-            data.add(itemY.getText());
-            data.add(x);
-            data.add(xy);
-            data.add(x2);
-            dm.addRow(data);
+        if(ketemu && txtErr != null) {
+            txtErr.requestFocus();
+        } else if(txCariWaktu.getText().equals("")) {
+            txCariWaktu.requestFocus();
+        } else {
+            DefaultTableModel dm = new DefaultTableModel(0,0);
+            String header[] = new String[] {"Tahun","Y","X","XY","X^2"};
+            dm.setColumnIdentifiers(header);
+            tblHasil.setModel(dm);
+            int[] xs;
+            if(n % 2 == 0) {
+                // n ganjil
+                xs = this.genXGenap(n);
+            } else {
+                // n ganjil
+                int awal,akhir;
+                awal = -((n - 1) / 2);
+                akhir = -awal;
+                xs = IntStream.rangeClosed(awal,akhir).toArray();
+            }
+
+            float sY = 0;
+            float sX = 0;
+            float sXY = 0;
+            float sX2 = 0;
+
+            int cari = Integer.valueOf(txCariWaktu.getText());
+            int xCari;
+            int nilaiWaktuAkhir = Integer.valueOf(listX.get(listX.size() - 1).getText());
+            int nilaiWaktuAwal = Integer.valueOf(listX.get(0).getText());
+
+            if(n % 2 != 0) {
+                // n ganjil
+                if(cari > nilaiWaktuAkhir){
+                    xCari = (cari - nilaiWaktuAkhir) + xs[xs.length -1];
+                } else {
+                    xCari = (cari - nilaiWaktuAwal) + xs[0];
+                }
+            } else {
+                // n genap
+                if(cari > nilaiWaktuAkhir) {
+                    xCari = xs[xs.length - 1] + ((cari - nilaiWaktuAkhir) * 2);
+                } else {
+                    xCari = xs[0] - ((nilaiWaktuAwal - cari) * 2);
+                }
+            }
+
+
+            for(int i=0;i<n;i++) {
+                JTextField itemX = listX.get(i);
+                JTextField itemY = listY.get(i);
+                int tahun = Integer.valueOf(itemX.getText());
+                int x = xs[i];
+                int y = Integer.valueOf(itemY.getText());
+                int xy = x*y;
+                int x2 = (int) Math.pow(x, 2);
+
+                sY += y;
+                sX += x;
+                sXY += xy;
+                sX2 += x2;
+
+                Vector<Object> data = new Vector<Object>();
+                data.add(itemX.getText());
+                data.add(itemY.getText());
+                data.add(x);
+                data.add(xy);
+                data.add(x2);
+                dm.addRow(data);
+            }
+
+            Vector<Object> footer = new Vector<Object>();
+            footer.add("Jumlah");
+            footer.add(sY);
+            footer.add(sX);
+            footer.add(sXY);
+            footer.add(sX2);
+            dm.addRow(footer);
+
+            res1.setText("= " + String.valueOf(sY/(float)n) + " + " + String.valueOf(sXY/sX2) + " * " + String.valueOf(xCari));
+            res2.setText("= " + String.valueOf(sY/(float)n) + " + " + String.valueOf((sXY/sX2) * xCari));
+            res3.setText("= " + String.valueOf((sY/(float)n) + ((sXY/sX2)*xCari)));
         }
-        
-        Vector<Object> footer = new Vector<Object>();
-        footer.add("Jumlah");
-        footer.add(sY);
-        footer.add(sX);
-        footer.add(sXY);
-        footer.add(sX2);
-        dm.addRow(footer);
-        
-        res1.setText("= " + String.valueOf(sY/(float)n) + " + " + String.valueOf(sXY/sX2) + " * " + String.valueOf(xCari));
-        res2.setText("= " + String.valueOf(sY/(float)n) + " + " + String.valueOf((sXY/sX2) * xCari));
-        res3.setText("= " + String.valueOf((sY/(float)n) + ((sXY/sX2)*xCari)));
     }
     
     /**
